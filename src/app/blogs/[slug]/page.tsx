@@ -9,11 +9,11 @@ import { resolveRequestLocale } from "@/lib/i18n/request-locale";
 import { formatDate } from "@/lib/utils";
 
 type BlogDetailPageProps = {
-  params: { slug: string } | Promise<{ slug: string }>;
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata({ params }: BlogDetailPageProps): Promise<Metadata> {
-  const { slug } = await Promise.resolve(params);
+  const { slug } = await params;
   const locale = await resolveRequestLocale();
   const messages = getMessages(locale);
   const post = await getBlogBySlug(slug);
@@ -40,7 +40,7 @@ export async function generateStaticParams() {
 }
 
 export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
-  const { slug } = await Promise.resolve(params);
+  const { slug } = await params;
   const locale = await resolveRequestLocale();
   const messages = getMessages(locale);
   const post = await getBlogBySlug(slug);

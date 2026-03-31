@@ -15,15 +15,18 @@ const locales: Locale[] = ["en", "ja", "zh"];
 const isGitHubPages = process.env.NEXT_PUBLIC_GITHUB_PAGES === "1";
 
 export function LanguageSwitcher({ currentLocale, label, languageNames }: LanguageSwitcherProps) {
-  if (isGitHubPages) {
-    return null;
-  }
-
   const pathname = usePathname() || `/${currentLocale}`;
 
   useEffect(() => {
+    if (isGitHubPages) {
+      return;
+    }
     document.cookie = `${LOCALE_COOKIE_NAME}=${currentLocale}; path=/; max-age=31536000; samesite=lax`;
   }, [currentLocale]);
+
+  if (isGitHubPages) {
+    return null;
+  }
 
   return (
     <div className="language-switcher" aria-label={label} data-current-locale={currentLocale}>

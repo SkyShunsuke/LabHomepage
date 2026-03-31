@@ -2,7 +2,7 @@ import { PageHero } from "@/components/page-hero";
 import { isGitHubPagesBuild } from "@/lib/runtime-mode";
 
 type AdminLoginPageProps = {
-  searchParams: { error?: string } | Promise<{ error?: string }>;
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 };
 
 export default async function AdminLoginPage({ searchParams }: AdminLoginPageProps) {
@@ -21,7 +21,8 @@ export default async function AdminLoginPage({ searchParams }: AdminLoginPagePro
     );
   }
 
-  const resolvedSearchParams = await Promise.resolve(searchParams);
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
+  const hasError = Boolean(resolvedSearchParams?.error);
 
   return (
     <>
@@ -44,7 +45,7 @@ export default async function AdminLoginPage({ searchParams }: AdminLoginPagePro
                 Sign in
               </button>
             </form>
-            {resolvedSearchParams.error ? <p style={{ color: "#b93030" }}>Invalid credentials.</p> : null}
+            {hasError ? <p style={{ color: "#b93030" }}>Invalid credentials.</p> : null}
           </article>
         </div>
       </section>

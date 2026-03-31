@@ -21,7 +21,7 @@ export default async function AdminProjectsPage() {
     <AdminShell>
       <article className="card">
         <h1>Projects</h1>
-        <p className="muted">Manage the project showcased in the homepage "Latest Project" section.</p>
+        <p className="muted">Manage the project showcased in the homepage &quot;Latest Project&quot; section.</p>
       </article>
 
       <article className="card">
