@@ -110,27 +110,40 @@ npm run build:fast
 
 ## Railway deployment notes
 
-1. Create a new Railway project and add:
-   - `Web Service` (this app)
-   - `PostgreSQL` plugin
-2. In service variables, set:
-   - `DATABASE_URL` (Railway usually injects this)
+This repository includes a Railway config file at `railway.toml`:
+
+- Build command: `npm run build`
+- Start command: `npm run start`
+- Health check path: `/`
+
+### Deploy steps
+
+1. Push this repository to GitHub.
+2. In Railway, click `New Project` -> `Deploy from GitHub repo`.
+3. Select this repository and create the service.
+4. Add a `PostgreSQL` service in the same Railway project.
+5. Attach the database to your web service (so `DATABASE_URL` is injected automatically).
+6. In your web service `Variables`, set:
    - `ADMIN_USERNAME`
    - `ADMIN_PASSWORD`
    - `ADMIN_SECRET`
    - `NEXT_PUBLIC_LAB_EMAIL`
    - `NEXT_PUBLIC_LAB_ADDRESS`
-3. Build command:
+   - Optional remote data variables:
+     - `PUBLICATIONS_CSV_URL`
+     - `MEMBERS_SPREADSHEET_URL`
+     - `NEWS_SPREADSHEET_URL`
+
+### First-time database setup
+
+After first deploy, run these one-time commands from Railway service shell:
 
 ```bash
-npm run build
+npm run db:push
+npm run db:seed
 ```
 
-4. Start command:
-
-```bash
-npm run start
-```
+If you are using only remote spreadsheet/CSV sources and do not need DB-managed content, `db:seed` is optional.
 
 ## GitHub Pages deployment (static public site)
 
