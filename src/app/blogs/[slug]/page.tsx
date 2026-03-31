@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { remark } from "remark";
 import html from "remark-html";
 import { PageHero } from "@/components/page-hero";
-import { getBlogBySlug, getBlogs } from "@/lib/data";
+import { getBlogBySlug } from "@/lib/data";
 import { getMessages } from "@/lib/i18n/messages";
 import { resolveRequestLocale } from "@/lib/i18n/request-locale";
 import { formatDate } from "@/lib/utils";
@@ -28,15 +28,6 @@ export async function generateMetadata({ params }: BlogDetailPageProps): Promise
     title: post.title,
     description: post.excerpt
   };
-}
-
-export async function generateStaticParams() {
-  const posts = await getBlogs();
-  return posts
-    .filter((post) => Boolean(post.slug))
-    .map((post) => ({
-      slug: post.slug as string
-    }));
 }
 
 export default async function BlogDetailPage({ params }: BlogDetailPageProps) {
