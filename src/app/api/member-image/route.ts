@@ -1,15 +1,27 @@
 import { NextResponse } from "next/server";
 import { isGitHubPagesBuild } from "@/lib/runtime-mode";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 function safeFileId(raw: string | null): string | null {
   if (!raw) {
     return null;
   }
 
-  const trimmed = raw.trim();
+  const trimmed = decodeURIComponent(raw).trim();
   if (!/^[A-Za-z0-9_-]{10,}$/.test(trimmed)) {
+    // Allow passing a full Google Drive URL accidentally in `id`.
+    try {
+      const url = new URL(trimmed);
+      const fromPath = url.pathname.match(/\/file\/d\/([^/]+)/)?.[1] || null;
+      const fromQuery = url.searchParams.get("id");
+      const candidate = (fromPath || fromQuery || "").trim();
+      if (/^[A-Za-z0-9_-]{10,}$/.test(candidate)) {
+        return candidate;
+      }
+    } catch {
+      return null;
+    }
     return null;
   }
 
@@ -49,7 +61,7 @@ export async function GET(request: Request) {
   const id = safeFileId(url.searchParams.get("id"));
 
   if (!id) {
-    return new NextResponse("Invalid image id", { status: 400 });
+    return new NextResponse("Image not available", { status: 404 });
   }
 
   const candidates = [
