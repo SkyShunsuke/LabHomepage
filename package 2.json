@@ -1,0 +1,41 @@
+{
+  "name": "lab-homepage",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "check:node": "node scripts/check-node-version.cjs",
+    "predev": "npm run check:node",
+    "prebuild": "npm run check:node",
+    "prestart": "npm run check:node",
+    "dev": "next dev",
+    "build": "next build",
+    "build:fast": "FAST_BUILD=1 next build --no-lint",
+    "start": "next start",
+    "lint": "next lint",
+    "db:push": "prisma db push",
+    "db:seed": "tsx prisma/seed.ts",
+    "dev:fast": "next dev",
+    "dev:design": "DESIGN_PREVIEW=1 next dev"
+  },
+  "engines": {
+    "node": "22.x"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.4.1",
+    "next": "^15.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^15.2.0",
+    "prisma": "^6.4.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}
