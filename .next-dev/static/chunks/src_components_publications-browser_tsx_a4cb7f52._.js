@@ -71,6 +71,7 @@ function PublicationsBrowser(param) {
     const [selectedYear, setSelectedYear] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("all");
     const [sortBy, setSortBy] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("newest");
     const [currentPage, setCurrentPage] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(1);
+    const [expandedAbstractIds, setExpandedAbstractIds] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(new Set());
     const yearOptions = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
         "PublicationsBrowser.useMemo[yearOptions]": ()=>Array.from(new Set(items.map({
                 "PublicationsBrowser.useMemo[yearOptions]": (item)=>item.year
@@ -151,7 +152,7 @@ function PublicationsBrowser(param) {
                 children: messages.previousPage
             }, void 0, false, {
                 fileName: "[project]/src/components/publications-browser.tsx",
-                lineNumber: 176,
+                lineNumber: 179,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -161,7 +162,7 @@ function PublicationsBrowser(param) {
                         children: "..."
                     }, "ellipsis-".concat(index), false, {
                         fileName: "[project]/src/components/publications-browser.tsx",
-                        lineNumber: 188,
+                        lineNumber: 191,
                         columnNumber: 13
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         type: "button",
@@ -171,12 +172,12 @@ function PublicationsBrowser(param) {
                         children: token
                     }, "page-".concat(token), false, {
                         fileName: "[project]/src/components/publications-browser.tsx",
-                        lineNumber: 192,
+                        lineNumber: 195,
                         columnNumber: 13
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/publications-browser.tsx",
-                lineNumber: 185,
+                lineNumber: 188,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -187,13 +188,13 @@ function PublicationsBrowser(param) {
                 children: messages.nextPage
             }, void 0, false, {
                 fileName: "[project]/src/components/publications-browser.tsx",
-                lineNumber: 205,
+                lineNumber: 208,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/publications-browser.tsx",
-        lineNumber: 175,
+        lineNumber: 178,
         columnNumber: 5
     }, this);
     const hasActiveFilters = normalize(searchQuery).length > 0 || normalize(selectedYear) !== "all";
@@ -219,13 +220,13 @@ function PublicationsBrowser(param) {
                                         }
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/publications-browser.tsx",
-                                        lineNumber: 225,
+                                        lineNumber: 228,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/publications-browser.tsx",
-                                lineNumber: 223,
+                                lineNumber: 226,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -243,7 +244,7 @@ function PublicationsBrowser(param) {
                                                 children: messages.allYears
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/publications-browser.tsx",
-                                                lineNumber: 245,
+                                                lineNumber: 248,
                                                 columnNumber: 15
                                             }, this),
                                             yearOptions.map((year)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -251,19 +252,19 @@ function PublicationsBrowser(param) {
                                                     children: year
                                                 }, "year-".concat(year), false, {
                                                     fileName: "[project]/src/components/publications-browser.tsx",
-                                                    lineNumber: 247,
+                                                    lineNumber: 250,
                                                     columnNumber: 17
                                                 }, this))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/publications-browser.tsx",
-                                        lineNumber: 238,
+                                        lineNumber: 241,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/publications-browser.tsx",
-                                lineNumber: 236,
+                                lineNumber: 239,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -281,7 +282,7 @@ function PublicationsBrowser(param) {
                                                 children: messages.sortNewest
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/publications-browser.tsx",
-                                                lineNumber: 263,
+                                                lineNumber: 266,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -289,7 +290,7 @@ function PublicationsBrowser(param) {
                                                 children: messages.sortOldest
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/publications-browser.tsx",
-                                                lineNumber: 264,
+                                                lineNumber: 267,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -297,7 +298,7 @@ function PublicationsBrowser(param) {
                                                 children: messages.sortTitleAsc
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/publications-browser.tsx",
-                                                lineNumber: 265,
+                                                lineNumber: 268,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -305,25 +306,25 @@ function PublicationsBrowser(param) {
                                                 children: messages.sortTitleDesc
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/publications-browser.tsx",
-                                                lineNumber: 266,
+                                                lineNumber: 269,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/publications-browser.tsx",
-                                        lineNumber: 256,
+                                        lineNumber: 259,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/publications-browser.tsx",
-                                lineNumber: 254,
+                                lineNumber: 257,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/publications-browser.tsx",
-                        lineNumber: 222,
+                        lineNumber: 225,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -334,7 +335,7 @@ function PublicationsBrowser(param) {
                                 children: messages.pageSummary.replace("{from}", String(firstItemNumber)).replace("{to}", String(lastItemNumber)).replace("{total}", String(filteredAndSortedItems.length))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/publications-browser.tsx",
-                                lineNumber: 272,
+                                lineNumber: 275,
                                 columnNumber: 11
                             }, this),
                             hasActiveFilters ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -349,19 +350,19 @@ function PublicationsBrowser(param) {
                                 children: messages.clearFilters
                             }, void 0, false, {
                                 fileName: "[project]/src/components/publications-browser.tsx",
-                                lineNumber: 276,
+                                lineNumber: 279,
                                 columnNumber: 13
                             }, this) : null
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/publications-browser.tsx",
-                        lineNumber: 271,
+                        lineNumber: 274,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/publications-browser.tsx",
-                lineNumber: 221,
+                lineNumber: 224,
                 columnNumber: 7
             }, this),
             pageItems.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("article", {
@@ -371,7 +372,7 @@ function PublicationsBrowser(param) {
                         children: messages.noResultsTitle
                     }, void 0, false, {
                         fileName: "[project]/src/components/publications-browser.tsx",
-                        lineNumber: 294,
+                        lineNumber: 297,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -379,24 +380,26 @@ function PublicationsBrowser(param) {
                         children: messages.noResultsBody
                     }, void 0, false, {
                         fileName: "[project]/src/components/publications-browser.tsx",
-                        lineNumber: 295,
+                        lineNumber: 298,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/publications-browser.tsx",
-                lineNumber: 293,
+                lineNumber: 296,
                 columnNumber: 9
-            }, this) : pageItems.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("article", {
-                    className: "card publication-card ".concat(item.highlight ? "publication-highlighted" : ""),
+            }, this) : pageItems.map((item)=>{
+                const hasLinks = Boolean(item.url || item.projectUrl || item.codeUrl);
+                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("article", {
+                    className: "card publication-card ".concat(item.highlight ? "publication-highlighted" : "", " ").concat(hasLinks ? "publication-card-with-links" : ""),
                     children: [
                         item.highlight ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: "publication-highlight-label",
                             children: item.highlight
                         }, void 0, false, {
                             fileName: "[project]/src/components/publications-browser.tsx",
-                            lineNumber: 300,
-                            columnNumber: 31
+                            lineNumber: 309,
+                            columnNumber: 33
                         }, this) : null,
                         item.teaserImageUrl ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                             src: item.teaserImageUrl,
@@ -405,23 +408,23 @@ function PublicationsBrowser(param) {
                             loading: "lazy"
                         }, void 0, false, {
                             fileName: "[project]/src/components/publications-browser.tsx",
-                            lineNumber: 302,
-                            columnNumber: 15
+                            lineNumber: 311,
+                            columnNumber: 17
                         }, this) : null,
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: "publication-authors muted",
                             children: formatAuthors(item.authors)
                         }, void 0, false, {
                             fileName: "[project]/src/components/publications-browser.tsx",
-                            lineNumber: 309,
-                            columnNumber: 13
+                            lineNumber: 318,
+                            columnNumber: 15
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                             children: item.title
                         }, void 0, false, {
                             fileName: "[project]/src/components/publications-browser.tsx",
-                            lineNumber: 310,
-                            columnNumber: 13
+                            lineNumber: 319,
+                            columnNumber: 15
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: "publication-venue-line muted",
@@ -430,8 +433,8 @@ function PublicationsBrowser(param) {
                                     children: item.venue
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/publications-browser.tsx",
-                                    lineNumber: 312,
-                                    columnNumber: 15
+                                    lineNumber: 321,
+                                    columnNumber: 17
                                 }, this),
                                 ", ",
                                 item.year,
@@ -439,22 +442,52 @@ function PublicationsBrowser(param) {
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/publications-browser.tsx",
-                            lineNumber: 311,
-                            columnNumber: 13
-                        }, this),
-                        item.abstract ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("blockquote", {
-                            className: "publication-citation",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                children: item.abstract
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/publications-browser.tsx",
-                                lineNumber: 316,
-                                columnNumber: 17
-                            }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/publications-browser.tsx",
-                            lineNumber: 315,
+                            lineNumber: 320,
                             columnNumber: 15
+                        }, this),
+                        item.abstract ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "publication-abstract",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    type: "button",
+                                    className: "publication-abstract-toggle",
+                                    "aria-expanded": expandedAbstractIds.has(item.id),
+                                    onClick: ()=>{
+                                        setExpandedAbstractIds((previous)=>{
+                                            const next = new Set(previous);
+                                            if (next.has(item.id)) {
+                                                next.delete(item.id);
+                                            } else {
+                                                next.add(item.id);
+                                            }
+                                            return next;
+                                        });
+                                    },
+                                    children: expandedAbstractIds.has(item.id) ? messages.hideAbstract : messages.showAbstract
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/publications-browser.tsx",
+                                    lineNumber: 325,
+                                    columnNumber: 19
+                                }, this),
+                                expandedAbstractIds.has(item.id) ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("blockquote", {
+                                    className: "publication-citation",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        children: item.abstract
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/publications-browser.tsx",
+                                        lineNumber: 345,
+                                        columnNumber: 23
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/publications-browser.tsx",
+                                    lineNumber: 344,
+                                    columnNumber: 21
+                                }, this) : null
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/components/publications-browser.tsx",
+                            lineNumber: 324,
+                            columnNumber: 17
                         }, this) : null,
                         item.url || item.projectUrl || item.codeUrl ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "publication-links",
@@ -476,8 +509,8 @@ function PublicationsBrowser(param) {
                                                 strokeWidth: "1.8"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/publications-browser.tsx",
-                                                lineNumber: 324,
-                                                columnNumber: 23
+                                                lineNumber: 355,
+                                                columnNumber: 25
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
                                                 d: "M14 2v5h5M9 12h6M9 16h6",
@@ -487,19 +520,19 @@ function PublicationsBrowser(param) {
                                                 strokeLinecap: "round"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/publications-browser.tsx",
-                                                lineNumber: 325,
-                                                columnNumber: 23
+                                                lineNumber: 356,
+                                                columnNumber: 25
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/publications-browser.tsx",
-                                        lineNumber: 323,
-                                        columnNumber: 21
+                                        lineNumber: 354,
+                                        columnNumber: 23
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/publications-browser.tsx",
-                                    lineNumber: 322,
-                                    columnNumber: 19
+                                    lineNumber: 353,
+                                    columnNumber: 21
                                 }, this) : null,
                                 item.projectUrl ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                     href: item.projectUrl,
@@ -518,8 +551,8 @@ function PublicationsBrowser(param) {
                                                 strokeWidth: "1.8"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/publications-browser.tsx",
-                                                lineNumber: 332,
-                                                columnNumber: 23
+                                                lineNumber: 363,
+                                                columnNumber: 25
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
                                                 d: "M12 12l7-4M12 12L5 8M12 12v8",
@@ -529,19 +562,19 @@ function PublicationsBrowser(param) {
                                                 strokeLinecap: "round"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/publications-browser.tsx",
-                                                lineNumber: 333,
-                                                columnNumber: 23
+                                                lineNumber: 364,
+                                                columnNumber: 25
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/publications-browser.tsx",
-                                        lineNumber: 331,
-                                        columnNumber: 21
+                                        lineNumber: 362,
+                                        columnNumber: 23
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/publications-browser.tsx",
-                                    lineNumber: 330,
-                                    columnNumber: 19
+                                    lineNumber: 361,
+                                    columnNumber: 21
                                 }, this) : null,
                                 item.codeUrl ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                     href: item.codeUrl,
@@ -561,40 +594,41 @@ function PublicationsBrowser(param) {
                                             strokeLinejoin: "round"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/publications-browser.tsx",
-                                            lineNumber: 340,
-                                            columnNumber: 23
+                                            lineNumber: 371,
+                                            columnNumber: 25
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/publications-browser.tsx",
-                                        lineNumber: 339,
-                                        columnNumber: 21
+                                        lineNumber: 370,
+                                        columnNumber: 23
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/publications-browser.tsx",
-                                    lineNumber: 338,
-                                    columnNumber: 19
+                                    lineNumber: 369,
+                                    columnNumber: 21
                                 }, this) : null
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/publications-browser.tsx",
-                            lineNumber: 320,
-                            columnNumber: 15
+                            lineNumber: 351,
+                            columnNumber: 17
                         }, this) : null
                     ]
                 }, item.id, true, {
                     fileName: "[project]/src/components/publications-browser.tsx",
-                    lineNumber: 299,
-                    columnNumber: 11
-                }, this)),
+                    lineNumber: 305,
+                    columnNumber: 13
+                }, this);
+            }),
             pagination
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/publications-browser.tsx",
-        lineNumber: 220,
+        lineNumber: 223,
         columnNumber: 5
     }, this);
 }
-_s(PublicationsBrowser, "coIzZOp0KCHbQYvdY3gEnpoS20w=");
+_s(PublicationsBrowser, "gms5Bx6DnqrTTd3GIZKaUwFPatA=");
 _c = PublicationsBrowser;
 var _c;
 __turbopack_context__.k.register(_c, "PublicationsBrowser");

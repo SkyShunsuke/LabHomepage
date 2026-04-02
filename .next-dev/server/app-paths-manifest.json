@@ -1,1 +1,6 @@
-{}
+{
+  "/page": "app/page.js",
+  "/publications/articles-books/page": "app/publications/articles-books/page.js",
+  "/publications/awards/page": "app/publications/awards/page.js",
+  "/publications/page": "app/publications/page.js"
+}

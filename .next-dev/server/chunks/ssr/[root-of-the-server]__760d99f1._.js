@@ -40,8 +40,7 @@ __turbopack_context__.s([
 ]);
 const SUPPORTED_LOCALES = [
     "en",
-    "ja",
-    "zh"
+    "ja"
 ];
 const DEFAULT_LOCALE = "en";
 const LOCALE_COOKIE_NAME = "site_locale";
@@ -52,9 +51,6 @@ function mapLanguageTagToLocale(tag) {
     const normalized = tag.toLowerCase();
     if (normalized.startsWith("ja")) {
         return "ja";
-    }
-    if (normalized.startsWith("zh")) {
-        return "zh";
     }
     if (normalized.startsWith("en")) {
         return "en";
@@ -93,20 +89,22 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$i18n$2f$config
 ;
 const locales = [
     "en",
-    "ja",
-    "zh"
+    "ja"
 ];
 const isGitHubPages = process.env.NEXT_PUBLIC_GITHUB_PAGES === "1";
 function LanguageSwitcher({ currentLocale, label, languageNames }) {
-    if (isGitHubPages) {
-        return null;
-    }
     const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["usePathname"])() || `/${currentLocale}`;
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if (isGitHubPages) {
+            return;
+        }
         document.cookie = `${__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$i18n$2f$config$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["LOCALE_COOKIE_NAME"]}=${currentLocale}; path=/; max-age=31536000; samesite=lax`;
     }, [
         currentLocale
     ]);
+    if (isGitHubPages) {
+        return null;
+    }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "language-switcher",
         "aria-label": label,
@@ -117,7 +115,7 @@ function LanguageSwitcher({ currentLocale, label, languageNames }) {
                 children: label
             }, void 0, false, {
                 fileName: "[project]/src/components/language-switcher.tsx",
-                lineNumber: 30,
+                lineNumber: 33,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -132,19 +130,19 @@ function LanguageSwitcher({ currentLocale, label, languageNames }) {
                         children: languageNames[locale]
                     }, locale, false, {
                         fileName: "[project]/src/components/language-switcher.tsx",
-                        lineNumber: 37,
+                        lineNumber: 40,
                         columnNumber: 13
                     }, this);
                 })
             }, void 0, false, {
                 fileName: "[project]/src/components/language-switcher.tsx",
-                lineNumber: 31,
+                lineNumber: 34,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/language-switcher.tsx",
-        lineNumber: 29,
+        lineNumber: 32,
         columnNumber: 5
     }, this);
 }
@@ -173,6 +171,53 @@ function isActivePath(targetHref, pathname) {
 }
 function SiteHeader({ locale, messages }) {
     const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["usePathname"])() || "/";
+    const achievementLabels = locale === "ja" ? {
+        publications: "学術論文",
+        presentations: "学会発表",
+        talks: "講演",
+        awards: "受賞",
+        articlesBooks: "記事・著書",
+        grants: "研究費",
+        collaboration: "共同研究"
+    } : {
+        publications: "Publications",
+        presentations: "Presentations",
+        talks: "Talks",
+        awards: "Awards",
+        articlesBooks: "Articles/Books",
+        grants: "Grants",
+        collaboration: "Collaboration"
+    };
+    const achievementSubItems = [
+        {
+            href: "/publications",
+            label: achievementLabels.publications
+        },
+        {
+            href: "/publications/presentations",
+            label: achievementLabels.presentations
+        },
+        {
+            href: "/publications/talks",
+            label: achievementLabels.talks
+        },
+        {
+            href: "/publications/awards",
+            label: achievementLabels.awards
+        },
+        {
+            href: "/publications/articles-books",
+            label: achievementLabels.articlesBooks
+        },
+        {
+            href: "/publications/grants",
+            label: achievementLabels.grants
+        },
+        {
+            href: "/publications/collaboration",
+            label: achievementLabels.collaboration
+        }
+    ];
     const navItems = [
         {
             href: "/",
@@ -224,7 +269,7 @@ function SiteHeader({ locale, messages }) {
                                     srcSet: "/assets/logos/favicon.ico"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/site-header.tsx",
-                                    lineNumber: 39,
+                                    lineNumber: 68,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
@@ -233,13 +278,13 @@ function SiteHeader({ locale, messages }) {
                                     className: "brand-logo"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/site-header.tsx",
-                                    lineNumber: 43,
+                                    lineNumber: 72,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/site-header.tsx",
-                            lineNumber: 38,
+                            lineNumber: 67,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -248,26 +293,26 @@ function SiteHeader({ locale, messages }) {
                                     children: messages.brandTitle
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/site-header.tsx",
-                                    lineNumber: 50,
+                                    lineNumber: 79,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("small", {
                                     children: messages.brandSubtitle
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/site-header.tsx",
-                                    lineNumber: 51,
+                                    lineNumber: 80,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/site-header.tsx",
-                            lineNumber: 49,
+                            lineNumber: 78,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/site-header.tsx",
-                    lineNumber: 37,
+                    lineNumber: 66,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -279,7 +324,7 @@ function SiteHeader({ locale, messages }) {
                             languageNames: messages.languages
                         }, void 0, false, {
                             fileName: "[project]/src/components/site-header.tsx",
-                            lineNumber: 56,
+                            lineNumber: 85,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -287,6 +332,48 @@ function SiteHeader({ locale, messages }) {
                             className: "main-nav",
                             children: navItems.map((item)=>{
                                 const isActive = isActivePath(item.href, pathname);
+                                if (item.href === "/publications") {
+                                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "nav-dropdown",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                                href: item.href,
+                                                className: `nav-link${isActive ? " active" : ""}`,
+                                                "aria-current": isActive ? "page" : undefined,
+                                                children: item.label
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/site-header.tsx",
+                                                lineNumber: 97,
+                                                columnNumber: 21
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                className: "nav-dropdown-menu",
+                                                "aria-label": "Achievement sections",
+                                                children: achievementSubItems.map((subItem)=>{
+                                                    const isSubItemActive = pathname === subItem.href || subItem.href !== "/publications" && pathname.startsWith(`${subItem.href}/`);
+                                                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                                        href: subItem.href,
+                                                        className: `nav-dropdown-item${isSubItemActive ? " nav-dropdown-item-active" : ""}`,
+                                                        "aria-current": isSubItemActive ? "page" : undefined,
+                                                        children: subItem.label
+                                                    }, subItem.href, false, {
+                                                        fileName: "[project]/src/components/site-header.tsx",
+                                                        lineNumber: 111,
+                                                        columnNumber: 27
+                                                    }, this);
+                                                })
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/site-header.tsx",
+                                                lineNumber: 104,
+                                                columnNumber: 21
+                                            }, this)
+                                        ]
+                                    }, item.href, true, {
+                                        fileName: "[project]/src/components/site-header.tsx",
+                                        lineNumber: 96,
+                                        columnNumber: 19
+                                    }, this);
+                                }
                                 return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                                     href: item.href,
                                     className: `nav-link${isActive ? " active" : ""}`,
@@ -294,30 +381,30 @@ function SiteHeader({ locale, messages }) {
                                     children: item.label
                                 }, item.href, false, {
                                     fileName: "[project]/src/components/site-header.tsx",
-                                    lineNumber: 66,
+                                    lineNumber: 127,
                                     columnNumber: 17
                                 }, this);
                             })
                         }, void 0, false, {
                             fileName: "[project]/src/components/site-header.tsx",
-                            lineNumber: 61,
+                            lineNumber: 90,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/site-header.tsx",
-                    lineNumber: 55,
+                    lineNumber: 84,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/site-header.tsx",
-            lineNumber: 36,
+            lineNumber: 65,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/site-header.tsx",
-        lineNumber: 35,
+        lineNumber: 64,
         columnNumber: 5
     }, this);
 }
