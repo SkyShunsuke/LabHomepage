@@ -29,7 +29,7 @@ export default async function HomePage() {
   const locale = await resolveRequestLocale();
   const messages = getMessages(locale);
   const [news, featuredProject, publications] = await Promise.all([
-    getLatestNews(3),
+    getLatestNews(3, locale),
     getFeaturedProject(),
     getPublications()
   ]);
@@ -193,19 +193,22 @@ export default async function HomePage() {
                     </span>
                   ) : null}
                   <p className="badge">{formatDate(item.publishedAt, locale)}</p>
-                  <h3>{item.title}</h3>
+                  <h3 className="news-title">{item.title}</h3>
                   {item.highlight ? <p className="news-highlight">{item.highlight}</p> : null}
                   {item.imageUrl ? (
                     <img src={item.imageUrl} alt={`${item.title} image`} className="news-image" loading="lazy" />
                   ) : null}
-                  <p className="news-content">{item.content}</p>
-                  {item.externalUrl ? (
-                    <p className="news-external-wrap">
-                      <a href={item.externalUrl} target="_blank" rel="noreferrer" className="news-external-button">
-                        {messages.news.visitExternal}
-                      </a>
-                    </p>
-                  ) : null}
+                  <details className="news-details">
+                    <summary className="news-details-summary">{messages.news.moreDetails}</summary>
+                    <p className="news-content">{item.content}</p>
+                    {item.externalUrl ? (
+                      <p className="news-external-wrap">
+                        <a href={item.externalUrl} target="_blank" rel="noreferrer" className="news-external-button">
+                          {messages.news.visitExternal}
+                        </a>
+                      </p>
+                    ) : null}
+                  </details>
                 </article>
               ))
             )}

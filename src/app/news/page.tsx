@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function NewsPage() {
   const locale = await resolveRequestLocale();
   const messages = getMessages(locale);
-  const news = await getNews();
+  const news = await getNews(locale);
   const newsItems = news.map((item) => ({
     id: item.id,
     publishedAt: item.publishedAt.toISOString(),

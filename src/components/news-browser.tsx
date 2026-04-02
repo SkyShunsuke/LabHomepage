@@ -45,7 +45,7 @@ type NewsBrowserProps = {
 
 type SortOption = "newest" | "oldest" | "title-asc" | "title-desc";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 20;
 
 function clampPage(current: number, totalPages: number): number {
   if (current < 1) {
@@ -257,31 +257,22 @@ export function NewsBrowser({ items, locale, messages }: NewsBrowserProps) {
               </span>
             ) : null}
             <p className="badge">{formatDate(new Date(item.publishedAt), locale)}</p>
-            <h2>{item.title}</h2>
+            <h2 className="news-title">{item.title}</h2>
             {item.highlight ? <p className="news-highlight">{item.highlight}</p> : null}
             {item.imageUrl ? (
               <img src={item.imageUrl} alt={`${item.title} image`} className="news-image" loading="lazy" />
             ) : null}
-            <p className="muted">{item.summary}</p>
-            {item.content.trim() !== item.summary.trim() ? (
-              <details className="news-details">
-                <summary className="news-details-summary">{messages.moreDetails}</summary>
-                <p className="news-content">{item.content}</p>
-                {item.externalUrl ? (
-                  <p className="news-external-wrap">
-                    <a href={item.externalUrl} target="_blank" rel="noreferrer" className="news-external-button">
-                      {messages.visitExternal}
-                    </a>
-                  </p>
-                ) : null}
-              </details>
-            ) : item.externalUrl ? (
-              <p className="news-external-wrap">
-                <a href={item.externalUrl} target="_blank" rel="noreferrer" className="news-external-button">
-                  {messages.visitExternal}
-                </a>
-              </p>
-            ) : null}
+            <details className="news-details">
+              <summary className="news-details-summary">{messages.moreDetails}</summary>
+              <p className="news-content">{item.content}</p>
+              {item.externalUrl ? (
+                <p className="news-external-wrap">
+                  <a href={item.externalUrl} target="_blank" rel="noreferrer" className="news-external-button">
+                    {messages.visitExternal}
+                  </a>
+                </p>
+              ) : null}
+            </details>
           </article>
         ))
       )}

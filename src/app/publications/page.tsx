@@ -8,7 +8,7 @@ import { resolveRequestLocale } from "@/lib/i18n/request-locale";
 const HERO_TITLE_JA = "学術論文";
 const HERO_SUBTITLE_JA = "国際会議や学術誌に掲載された論文の一覧";
 const HERO_TITLE_EN = "Publications";
-const HERO_SUBTITLE_EN = "A list of ...";
+const HERO_SUBTITLE_EN = "A list of papers published in international conferences and academic journals.";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await resolveRequestLocale();

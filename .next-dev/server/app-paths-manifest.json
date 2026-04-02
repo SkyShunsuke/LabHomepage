@@ -1,11 +1,7 @@
 {
+  "/api/member-image/route": "app/api/member-image/route.js",
+  "/blogs/page": "app/blogs/page.js",
+  "/locale/route": "app/locale/route.js",
   "/news/page": "app/news/page.js",
-  "/page": "app/page.js",
-  "/publications/articles-books/page": "app/publications/articles-books/page.js",
-  "/publications/awards/page": "app/publications/awards/page.js",
-  "/publications/collaboration/page": "app/publications/collaboration/page.js",
-  "/publications/grants/page": "app/publications/grants/page.js",
-  "/publications/page": "app/publications/page.js",
-  "/publications/presentations/page": "app/publications/presentations/page.js",
-  "/publications/talks/page": "app/publications/talks/page.js"
+  "/page": "app/page.js"
 }

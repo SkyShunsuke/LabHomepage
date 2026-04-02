@@ -12,6 +12,7 @@ import { getRemoteCsvNews } from "@/lib/news-remote-csv";
 import { getRemoteResearchByNumbers } from "@/lib/research-by-numbers-remote-csv";
 import { getRemoteCsvPublications } from "@/lib/publications-remote-csv";
 import { getRemoteResearchProjects } from "@/lib/research-projects-remote-csv";
+import type { Locale } from "@/lib/i18n/types";
 
 type PublicationWithOptionalFeature = {
   id: string;
@@ -63,7 +64,7 @@ function isDesignPreviewEnabled() {
   return process.env.DESIGN_PREVIEW === "1" || process.env.DESIGN_PREVIEW === "true";
 }
 
-export async function getLatestNews(limit = 3) {
+export async function getLatestNews(limit = 3, locale: Locale = "en") {
   const normalizedLimit = Math.max(0, limit);
   if (normalizedLimit === 0) {
     return [];
@@ -73,7 +74,7 @@ export async function getLatestNews(limit = 3) {
     return previewNews.slice(0, normalizedLimit).map(toPublicNewsFromDbRecord);
   }
 
-  const remoteCsvNews = await getRemoteCsvNews().catch((error) => {
+  const remoteCsvNews = await getRemoteCsvNews(locale).catch((error) => {
     console.error("Failed to load remote news spreadsheet.", error);
     return null;
   });
@@ -102,12 +103,12 @@ export async function getLatestNews(limit = 3) {
   return news.map(toPublicNewsFromDbRecord);
 }
 
-export async function getNews() {
+export async function getNews(locale: Locale = "en") {
   if (isDesignPreviewEnabled()) {
     return previewNews.map(toPublicNewsFromDbRecord);
   }
 
-  const remoteCsvNews = await getRemoteCsvNews().catch((error) => {
+  const remoteCsvNews = await getRemoteCsvNews(locale).catch((error) => {
     console.error("Failed to load remote news spreadsheet.", error);
     return null;
   });

@@ -1325,6 +1325,12 @@ a {
   margin: .55rem 0 0;
 }
 
+.news-title {
+  margin: .35rem 0 .25rem;
+  font-size: max(1rem, min(1.4vw, 1.16rem));
+  line-height: 1.35;
+}
+
 .news-meta-row {
   flex-wrap: wrap;
   align-items: center;

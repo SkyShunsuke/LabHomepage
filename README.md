@@ -246,7 +246,11 @@ Member photos use center-cropped circular rendering on the public members page.
 ## Manage news with Google Spreadsheet (auto sync)
 
 You can manage lab activity news in a Google Spreadsheet (or CSV) hosted on Google Drive.  
-When `NEWS_SPREADSHEET_URL` is set, `/news` and homepage latest news read this spreadsheet instead of DB news.
+If locale-specific URLs are set, `/news` and homepage latest news read:
+- `NEWS_JA_SPREADSHEET_URL` for Japanese locale pages
+- `NEWS_EN_SPREADSHEET_URL` for English locale pages
+
+`NEWS_SPREADSHEET_URL` is supported as a fallback when locale-specific URLs are not set.
 
 1. Prepare spreadsheet columns:
    - `date` (required; parseable date)
@@ -260,6 +264,9 @@ When `NEWS_SPREADSHEET_URL` is set, `/news` and homepage latest news read this s
 3. Set in `.env`:
 
 ```bash
+NEWS_JA_SPREADSHEET_URL="https://docs.google.com/spreadsheets/d/<JA_SHEET_ID>/edit#gid=0"
+NEWS_EN_SPREADSHEET_URL="https://docs.google.com/spreadsheets/d/<EN_SHEET_ID>/edit#gid=0"
+# Optional fallback for both locales:
 NEWS_SPREADSHEET_URL="https://docs.google.com/spreadsheets/d/<SHEET_ID>/edit#gid=0"
 NEWS_SPREADSHEET_REVALIDATE_SECONDS="300"
 ```

@@ -1,4 +1,10 @@
 import { normalizeGoogleDriveImageUrl } from "@/lib/members-remote-csv";
+import type { Locale } from "@/lib/i18n/types";
+
+const DEFAULT_EN_NEWS_SHEET_URL =
+  "https://docs.google.com/spreadsheets/d/13GxdLEPyiw41qYm6300btAh0TVc9OWDtK92I9Th1RJE/edit?usp=drive_link";
+const DEFAULT_JA_NEWS_SHEET_URL =
+  "https://docs.google.com/spreadsheets/d/10hPAiYhWmGNWSQ14PHgzYczANeKcEaWZcfuwFgd9Bkc/edit?usp=drive_link";
 
 const REQUIRED_HEADERS = ["date", "title", "content"] as const;
 const CANONICAL_HEADERS = new Set(["date", "title", "content", "type", "highlight", "imageUrl", "externalUrl"]);
@@ -46,6 +52,15 @@ export type RemoteSheetNews = {
   imageUrl: string | null;
   externalUrl: string | null;
 };
+
+function resolveSheetUrl(locale: Locale): string | null {
+  const fallback = process.env.NEWS_SPREADSHEET_URL?.trim() || null;
+  if (locale === "ja") {
+    return process.env.NEWS_JA_SPREADSHEET_URL?.trim() || fallback || DEFAULT_JA_NEWS_SHEET_URL;
+  }
+
+  return process.env.NEWS_EN_SPREADSHEET_URL?.trim() || fallback || DEFAULT_EN_NEWS_SHEET_URL;
+}
 
 function asOptionalString(value: string | undefined): string | null {
   if (!value) {
@@ -137,12 +152,14 @@ function normalizeGoogleCsvUrl(rawUrl: string): string {
       }
 
       const hashGidMatch = url.hash.match(/gid=(\d+)/);
-      const gid = url.searchParams.get("gid") || hashGidMatch?.[1] || "0";
+      const gid = url.searchParams.get("gid") || hashGidMatch?.[1];
       const csvUrl = new URL(url.toString());
       csvUrl.pathname = `/spreadsheets/d/${pathMatch[1]}/export`;
       csvUrl.search = "";
       csvUrl.searchParams.set("format", "csv");
-      csvUrl.searchParams.set("gid", gid);
+      if (gid) {
+        csvUrl.searchParams.set("gid", gid);
+      }
       csvUrl.hash = "";
       return csvUrl.toString();
     }
@@ -226,8 +243,8 @@ function parseDateOrThrow(raw: string | null, rowNumber: number): Date {
   return parsed;
 }
 
-export async function getRemoteCsvNews(): Promise<RemoteSheetNews[] | null> {
-  const csvUrl = process.env.NEWS_SPREADSHEET_URL?.trim();
+export async function getRemoteCsvNews(locale: Locale): Promise<RemoteSheetNews[] | null> {
+  const csvUrl = resolveSheetUrl(locale);
   if (!csvUrl) {
     return null;
   }
