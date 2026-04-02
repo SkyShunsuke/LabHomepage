@@ -5,9 +5,18 @@ import { getRemoteAwardsSections } from "@/lib/awards-remote-csv";
 import { getMessages } from "@/lib/i18n/messages";
 import { resolveRequestLocale } from "@/lib/i18n/request-locale";
 
-const SECTION_TITLE = "Awards";
-const SECTION_DESCRIPTION = "Awards and recognitions received by lab members.";
+const SECTION_TITLE_EN = "Awards";
+const SECTION_SUBTITLE_EN = "A list of awards received by students and faculty in our lab.";
 const SECTION_TITLE_JA = "受賞";
+const SECTION_SUBTITLE_JA = "本研究室に所属する学生や教員の受賞一覧";
+
+function getHeroCopy(locale: "en" | "ja" | "zh"): { title: string; subtitle: string } {
+  if (locale === "ja") {
+    return { title: SECTION_TITLE_JA, subtitle: SECTION_SUBTITLE_JA };
+  }
+
+  return { title: SECTION_TITLE_EN, subtitle: SECTION_SUBTITLE_EN };
+}
 
 function getAwardMessages(locale: "en" | "ja" | "zh") {
   if (locale === "ja") {
@@ -74,19 +83,18 @@ function getAwardMessages(locale: "en" | "ja" | "zh") {
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await resolveRequestLocale();
-  const messages = getMessages(locale);
-  const sectionTitle = locale === "ja" ? SECTION_TITLE_JA : SECTION_TITLE;
+  const heroCopy = getHeroCopy(locale);
 
   return {
-    title: `${messages.publications.title} | ${sectionTitle}`,
-    description: SECTION_DESCRIPTION
+    title: heroCopy.title,
+    description: heroCopy.subtitle
   };
 }
 
 export default async function AchievementAwardsPage() {
   const locale = await resolveRequestLocale();
   const messages = getMessages(locale);
-  const sectionTitle = locale === "ja" ? SECTION_TITLE_JA : SECTION_TITLE;
+  const heroCopy = getHeroCopy(locale);
   const awardMessages = getAwardMessages(locale);
   const sections = await getRemoteAwardsSections(locale).catch((error) => {
     console.error("Failed to load awards spreadsheets.", error);
@@ -99,7 +107,7 @@ export default async function AchievementAwardsPage() {
 
   return (
     <>
-      <PageHero title={messages.publications.title} subtitle={sectionTitle} />
+      <PageHero title={heroCopy.title} subtitle={heroCopy.subtitle} />
 
       <section className="section achievement-section">
         <div className="container list">

@@ -5,19 +5,26 @@ import { getPublications } from "@/lib/data";
 import { getMessages } from "@/lib/i18n/messages";
 import { resolveRequestLocale } from "@/lib/i18n/request-locale";
 
+const HERO_TITLE_JA = "学術論文";
+const HERO_SUBTITLE_JA = "国際会議や学術誌に掲載された論文の一覧";
+
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await resolveRequestLocale();
   const messages = getMessages(locale);
+  const heroTitle = locale === "ja" ? HERO_TITLE_JA : messages.publications.title;
+  const heroSubtitle = locale === "ja" ? HERO_SUBTITLE_JA : messages.publications.subtitle;
 
   return {
-    title: messages.publications.title,
-    description: messages.publications.subtitle
+    title: heroTitle,
+    description: heroSubtitle
   };
 }
 
 export default async function PublicationsPage() {
   const locale = await resolveRequestLocale();
   const messages = getMessages(locale);
+  const heroTitle = locale === "ja" ? HERO_TITLE_JA : messages.publications.title;
+  const heroSubtitle = locale === "ja" ? HERO_SUBTITLE_JA : messages.publications.subtitle;
   const publications = await getPublications();
   const publicationItems = publications.map((item) => ({
     id: item.id,
@@ -35,7 +42,7 @@ export default async function PublicationsPage() {
 
   return (
     <>
-      <PageHero title={messages.publications.title} subtitle={messages.publications.subtitle} />
+      <PageHero title={heroTitle} subtitle={heroSubtitle} />
 
       <section className="section achievement-section">
         <div className="container list">

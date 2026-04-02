@@ -6,9 +6,18 @@ import { getMessages } from "@/lib/i18n/messages";
 import { getRemotePresentationSections } from "@/lib/presentations-remote-csv";
 import { resolveRequestLocale } from "@/lib/i18n/request-locale";
 
-const SECTION_TITLE = "Presentations";
-const SECTION_DESCRIPTION = "Conference and workshop presentation records.";
+const SECTION_TITLE_EN = "Presentations";
+const SECTION_SUBTITLE_EN = "A list of presentations from our lab at workshops and academic conferences.";
 const SECTION_TITLE_JA = "学会発表";
+const SECTION_SUBTITLE_JA = "研究会や学会等における本研究室からの発表一覧";
+
+function getHeroCopy(locale: "en" | "ja" | "zh"): { title: string; subtitle: string } {
+  if (locale === "ja") {
+    return { title: SECTION_TITLE_JA, subtitle: SECTION_SUBTITLE_JA };
+  }
+
+  return { title: SECTION_TITLE_EN, subtitle: SECTION_SUBTITLE_EN };
+}
 
 function normalizeRelationId(value: string | null | undefined): string | null {
   const normalized = value
@@ -98,19 +107,18 @@ function getPresentationMessages(locale: "en" | "ja" | "zh") {
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await resolveRequestLocale();
-  const messages = getMessages(locale);
-  const sectionTitle = locale === "ja" ? SECTION_TITLE_JA : SECTION_TITLE;
+  const heroCopy = getHeroCopy(locale);
 
   return {
-    title: `${messages.publications.title} | ${sectionTitle}`,
-    description: SECTION_DESCRIPTION
+    title: heroCopy.title,
+    description: heroCopy.subtitle
   };
 }
 
 export default async function AchievementPresentationsPage() {
   const locale = await resolveRequestLocale();
   const messages = getMessages(locale);
-  const sectionTitle = locale === "ja" ? SECTION_TITLE_JA : SECTION_TITLE;
+  const heroCopy = getHeroCopy(locale);
   const presentationMessages = getPresentationMessages(locale);
   const sections = await getRemotePresentationSections(locale).catch((error) => {
     console.error("Failed to load presentation spreadsheets.", error);
@@ -160,7 +168,7 @@ export default async function AchievementPresentationsPage() {
 
   return (
     <>
-      <PageHero title={messages.publications.title} subtitle={sectionTitle} />
+      <PageHero title={heroCopy.title} subtitle={heroCopy.subtitle} />
 
       <section className="section achievement-section">
         <div className="container list">

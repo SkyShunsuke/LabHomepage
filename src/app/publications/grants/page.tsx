@@ -1,13 +1,21 @@
 import type { Metadata } from "next";
 import { GrantsBrowser, type GrantItem } from "@/components/grants-browser";
 import { PageHero } from "@/components/page-hero";
-import { getMessages } from "@/lib/i18n/messages";
 import { resolveRequestLocale } from "@/lib/i18n/request-locale";
 import { getRemoteGrantsSections } from "@/lib/grants-remote-csv";
 
-const SECTION_TITLE = "Grants";
-const SECTION_DESCRIPTION = "Research grant projects and funding information.";
+const SECTION_TITLE_EN = "Grants";
+const SECTION_SUBTITLE_EN = "A list of research funding acquired by our lab.";
 const SECTION_TITLE_JA = "研究費";
+const SECTION_SUBTITLE_JA = "本研究室が獲得した研究資金一覧";
+
+function getHeroCopy(locale: "en" | "ja" | "zh"): { title: string; subtitle: string } {
+  if (locale === "ja") {
+    return { title: SECTION_TITLE_JA, subtitle: SECTION_SUBTITLE_JA };
+  }
+
+  return { title: SECTION_TITLE_EN, subtitle: SECTION_SUBTITLE_EN };
+}
 
 function normalizeAmountForEnglish(amount: string | null): string | null {
   if (!amount) {
@@ -108,19 +116,17 @@ function getGrantSectionLabels(locale: "en" | "ja" | "zh") {
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await resolveRequestLocale();
-  const messages = getMessages(locale);
-  const sectionTitle = locale === "ja" ? SECTION_TITLE_JA : SECTION_TITLE;
+  const heroCopy = getHeroCopy(locale);
 
   return {
-    title: `${messages.publications.title} | ${sectionTitle}`,
-    description: SECTION_DESCRIPTION
+    title: heroCopy.title,
+    description: heroCopy.subtitle
   };
 }
 
 export default async function AchievementGrantsPage() {
   const locale = await resolveRequestLocale();
-  const messages = getMessages(locale);
-  const sectionTitle = locale === "ja" ? SECTION_TITLE_JA : SECTION_TITLE;
+  const heroCopy = getHeroCopy(locale);
   const labels = getGrantSectionLabels(locale);
   const sections = await getRemoteGrantsSections(locale).catch((error) => {
     console.error("Failed to load grants spreadsheets.", error);
@@ -141,7 +147,7 @@ export default async function AchievementGrantsPage() {
 
   return (
     <>
-      <PageHero title={messages.publications.title} subtitle={sectionTitle} />
+      <PageHero title={heroCopy.title} subtitle={heroCopy.subtitle} />
 
       <section className="section achievement-section">
         <div className="container list">
