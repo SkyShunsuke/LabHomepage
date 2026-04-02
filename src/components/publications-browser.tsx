@@ -37,6 +37,8 @@ type PublicationsBrowserMessages = {
   paperAriaLabel: string;
   projectAriaLabel: string;
   codeAriaLabel: string;
+  showAbstract: string;
+  hideAbstract: string;
 };
 
 type PublicationsBrowserProps = {
@@ -116,6 +118,7 @@ export function PublicationsBrowser({ items, messages }: PublicationsBrowserProp
   const [selectedYear, setSelectedYear] = useState("all");
   const [sortBy, setSortBy] = useState<SortOption>("newest");
   const [currentPage, setCurrentPage] = useState(1);
+  const [expandedAbstractIds, setExpandedAbstractIds] = useState<Set<string>>(new Set());
 
   const yearOptions = useMemo(
     () => Array.from(new Set(items.map((item) => item.year))).sort((a, b) => b - a),
@@ -295,56 +298,85 @@ export function PublicationsBrowser({ items, messages }: PublicationsBrowserProp
           <p className="muted">{messages.noResultsBody}</p>
         </article>
       ) : (
-        pageItems.map((item) => (
-          <article key={item.id} className={`card publication-card ${item.highlight ? "publication-highlighted" : ""}`}>
-            {item.highlight ? <p className="publication-highlight-label">{item.highlight}</p> : null}
-            {item.teaserImageUrl ? (
-              <img
-                src={item.teaserImageUrl}
-                alt={`${item.title} ${messages.teaserAltSuffix}`}
-                className="publication-teaser"
-                loading="lazy"
-              />
-            ) : null}
-            <p className="publication-authors muted">{formatAuthors(item.authors)}</p>
-            <h2>{item.title}</h2>
-            <p className="publication-venue-line muted">
-              <em>{item.venue}</em>, {item.year}.
-            </p>
-            {item.abstract ? (
-              <blockquote className="publication-citation">
-                <p>{item.abstract}</p>
-              </blockquote>
-            ) : null}
-            {item.url || item.projectUrl || item.codeUrl ? (
-              <div className="publication-links">
-                {item.url ? (
-                  <a href={item.url} target="_blank" rel="noreferrer" className="publication-link-icon" aria-label={messages.paperAriaLabel}>
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z" fill="none" stroke="currentColor" strokeWidth="1.8" />
-                      <path d="M14 2v5h5M9 12h6M9 16h6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-                    </svg>
-                  </a>
-                ) : null}
-                {item.projectUrl ? (
-                  <a href={item.projectUrl} target="_blank" rel="noreferrer" className="publication-link-icon" aria-label={messages.projectAriaLabel}>
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M12 4l7 4v8l-7 4-7-4V8z" fill="none" stroke="currentColor" strokeWidth="1.8" />
-                      <path d="M12 12l7-4M12 12L5 8M12 12v8" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-                    </svg>
-                  </a>
-                ) : null}
-                {item.codeUrl ? (
-                  <a href={item.codeUrl} target="_blank" rel="noreferrer" className="publication-link-icon" aria-label={messages.codeAriaLabel}>
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M9 8L4 12l5 4M15 8l5 4-5 4M14 5l-4 14" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </a>
-                ) : null}
-              </div>
-            ) : null}
-          </article>
-        ))
+        pageItems.map((item) => {
+          const hasLinks = Boolean(item.url || item.projectUrl || item.codeUrl);
+
+          return (
+            <article
+              key={item.id}
+              className={`card publication-card ${item.highlight ? "publication-highlighted" : ""} ${hasLinks ? "publication-card-with-links" : ""}`}
+            >
+              {item.highlight ? <p className="publication-highlight-label">{item.highlight}</p> : null}
+              {item.teaserImageUrl ? (
+                <img
+                  src={item.teaserImageUrl}
+                  alt={`${item.title} ${messages.teaserAltSuffix}`}
+                  className="publication-teaser"
+                  loading="lazy"
+                />
+              ) : null}
+              <p className="publication-authors muted">{formatAuthors(item.authors)}</p>
+              <h2>{item.title}</h2>
+              <p className="publication-venue-line muted">
+                <em>{item.venue}</em>, {item.year}.
+              </p>
+              {item.abstract ? (
+                <div className="publication-abstract">
+                  <button
+                    type="button"
+                    className="publication-abstract-toggle"
+                    aria-expanded={expandedAbstractIds.has(item.id)}
+                    onClick={() => {
+                      setExpandedAbstractIds((previous) => {
+                        const next = new Set(previous);
+                        if (next.has(item.id)) {
+                          next.delete(item.id);
+                        } else {
+                          next.add(item.id);
+                        }
+                        return next;
+                      });
+                    }}
+                  >
+                    {expandedAbstractIds.has(item.id) ? messages.hideAbstract : messages.showAbstract}
+                  </button>
+                  {expandedAbstractIds.has(item.id) ? (
+                    <blockquote className="publication-citation">
+                      <p>{item.abstract}</p>
+                    </blockquote>
+                  ) : null}
+                </div>
+              ) : null}
+              {item.url || item.projectUrl || item.codeUrl ? (
+                <div className="publication-links">
+                  {item.url ? (
+                    <a href={item.url} target="_blank" rel="noreferrer" className="publication-link-icon" aria-label={messages.paperAriaLabel}>
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z" fill="none" stroke="currentColor" strokeWidth="1.8" />
+                        <path d="M14 2v5h5M9 12h6M9 16h6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                      </svg>
+                    </a>
+                  ) : null}
+                  {item.projectUrl ? (
+                    <a href={item.projectUrl} target="_blank" rel="noreferrer" className="publication-link-icon" aria-label={messages.projectAriaLabel}>
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 4l7 4v8l-7 4-7-4V8z" fill="none" stroke="currentColor" strokeWidth="1.8" />
+                        <path d="M12 12l7-4M12 12L5 8M12 12v8" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                      </svg>
+                    </a>
+                  ) : null}
+                  {item.codeUrl ? (
+                    <a href={item.codeUrl} target="_blank" rel="noreferrer" className="publication-link-icon" aria-label={messages.codeAriaLabel}>
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M9 8L4 12l5 4M15 8l5 4-5 4M14 5l-4 14" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </a>
+                  ) : null}
+                </div>
+              ) : null}
+            </article>
+          );
+        })
       )}
 
       {pagination}

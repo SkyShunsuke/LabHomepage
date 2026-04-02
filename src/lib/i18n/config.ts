@@ -1,6 +1,6 @@
 import type { Locale } from "@/lib/i18n/types";
 
-export const SUPPORTED_LOCALES: Locale[] = ["en", "ja", "zh"];
+export const SUPPORTED_LOCALES: Locale[] = ["en", "ja"];
 export const DEFAULT_LOCALE: Locale = "en";
 export const LOCALE_COOKIE_NAME = "site_locale";
 
@@ -13,10 +13,6 @@ function mapLanguageTagToLocale(tag: string): Locale | null {
 
   if (normalized.startsWith("ja")) {
     return "ja";
-  }
-
-  if (normalized.startsWith("zh")) {
-    return "zh";
   }
 
   if (normalized.startsWith("en")) {

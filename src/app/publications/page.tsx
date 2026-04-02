@@ -37,7 +37,7 @@ export default async function PublicationsPage() {
     <>
       <PageHero title={messages.publications.title} subtitle={messages.publications.subtitle} />
 
-      <section className="section">
+      <section className="section achievement-section">
         <div className="container list">
           {publications.length === 0 ? (
             <article className="card">
@@ -67,7 +67,9 @@ export default async function PublicationsPage() {
                 teaserAltSuffix: messages.publications.teaserAltSuffix,
                 paperAriaLabel: messages.publications.paperAriaLabel,
                 projectAriaLabel: messages.publications.projectAriaLabel,
-                codeAriaLabel: messages.publications.codeAriaLabel
+                codeAriaLabel: messages.publications.codeAriaLabel,
+                showAbstract: messages.publications.showAbstract,
+                hideAbstract: messages.publications.hideAbstract
               }}
             />
           )}

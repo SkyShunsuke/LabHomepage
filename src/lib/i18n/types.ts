@@ -1,4 +1,4 @@
-export type Locale = "en" | "ja" | "zh";
+export type Locale = "en" | "ja";
 
 export type Messages = {
   metadata: {
@@ -102,11 +102,13 @@ export type Messages = {
       paperUrl?: string;
       codeUrl?: string;
       demoUrl?: string;
+      projectUrl?: string;
     }>;
     projectLinks: {
       paper: string;
       code: string;
       demo: string;
+      project: string;
     };
     outcomesTitle: string;
     outcomesSubtitle: string;
@@ -174,6 +176,8 @@ export type Messages = {
     paperAriaLabel: string;
     projectAriaLabel: string;
     codeAriaLabel: string;
+    showAbstract: string;
+    hideAbstract: string;
   };
   members: {
     title: string;

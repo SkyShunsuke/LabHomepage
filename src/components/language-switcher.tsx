@@ -11,7 +11,7 @@ type LanguageSwitcherProps = {
   languageNames: Record<Locale, string>;
 };
 
-const locales: Locale[] = ["en", "ja", "zh"];
+const locales: Locale[] = ["en", "ja"];
 const isGitHubPages = process.env.NEXT_PUBLIC_GITHUB_PAGES === "1";
 
 export function LanguageSwitcher({ currentLocale, label, languageNames }: LanguageSwitcherProps) {

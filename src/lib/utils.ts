@@ -12,10 +12,6 @@ function toDateLocale(locale: string): string {
     return "ja-JP";
   }
 
-  if (locale === "zh") {
-    return "zh-CN";
-  }
-
   return "en-US";
 }
 

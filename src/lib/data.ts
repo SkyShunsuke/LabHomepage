@@ -9,7 +9,9 @@ import {
 import { parseMemberBio } from "@/lib/member-research-topic";
 import { getRemoteCsvMembers, normalizeGoogleDriveImageUrl } from "@/lib/members-remote-csv";
 import { getRemoteCsvNews } from "@/lib/news-remote-csv";
+import { getRemoteResearchByNumbers } from "@/lib/research-by-numbers-remote-csv";
 import { getRemoteCsvPublications } from "@/lib/publications-remote-csv";
+import { getRemoteResearchProjects } from "@/lib/research-projects-remote-csv";
 
 type PublicationWithOptionalFeature = {
   id: string;
@@ -39,6 +41,22 @@ export type PublicNews = {
   highlight: string | null;
   imageUrl: string | null;
   externalUrl: string | null;
+};
+
+export type ResearchProjectBlock = {
+  title: string;
+  problem: string;
+  approach: string;
+  status: string;
+  paperUrl: string | null;
+  codeUrl: string | null;
+  demoUrl: string | null;
+  projectUrl: string | null;
+};
+
+export type ResearchByNumberBlock = {
+  value: string;
+  label: string;
 };
 
 function isDesignPreviewEnabled() {
@@ -211,6 +229,85 @@ export async function getPublications() {
   return prisma.publication.findMany({
     orderBy: [{ year: "desc" }, { createdAt: "desc" }]
   });
+}
+
+export async function getResearchProjectBlocks(
+  fallbackProjects: Array<{
+    title: string;
+    problem: string;
+    approach: string;
+    status: string;
+    paperUrl?: string;
+    codeUrl?: string;
+    demoUrl?: string;
+    projectUrl?: string;
+  }>
+): Promise<ResearchProjectBlock[]> {
+  if (isDesignPreviewEnabled()) {
+    return fallbackProjects.map((project) => ({
+      title: project.title,
+      problem: project.problem,
+      approach: project.approach,
+      status: project.status,
+      paperUrl: project.paperUrl ?? null,
+      codeUrl: project.codeUrl ?? null,
+      demoUrl: project.demoUrl ?? null,
+      projectUrl: project.projectUrl ?? null
+    }));
+  }
+
+  const remoteProjects = await getRemoteResearchProjects().catch((error) => {
+    console.error("Failed to load remote research projects spreadsheet.", error);
+    return null;
+  });
+
+  if (remoteProjects) {
+    return remoteProjects.map((project) => ({
+      title: project.title,
+      problem: project.problem,
+      approach: project.approach,
+      status: project.status,
+      paperUrl: project.paperLink,
+      codeUrl: project.codeLink,
+      demoUrl: project.demoLink,
+      projectUrl: project.projectLink
+    }));
+  }
+
+  return fallbackProjects.map((project) => ({
+    title: project.title,
+    problem: project.problem,
+    approach: project.approach,
+    status: project.status,
+    paperUrl: project.paperUrl ?? null,
+    codeUrl: project.codeUrl ?? null,
+    demoUrl: project.demoUrl ?? null,
+    projectUrl: project.projectUrl ?? null
+  }));
+}
+
+export async function getResearchByNumbersBlocks(
+  fallbackByNumbers: Array<{ value: string; label: string }>
+): Promise<ResearchByNumberBlock[]> {
+  if (isDesignPreviewEnabled()) {
+    return fallbackByNumbers.map((item) => ({ value: item.value, label: item.label }));
+  }
+
+  const remoteByNumbers = await getRemoteResearchByNumbers().catch((error) => {
+    console.error("Failed to load remote research by numbers spreadsheet.", error);
+    return null;
+  });
+
+  if (!remoteByNumbers || fallbackByNumbers.length < 4) {
+    return fallbackByNumbers.map((item) => ({ value: item.value, label: item.label }));
+  }
+
+  return [
+    { value: remoteByNumbers.lastyearPapers, label: fallbackByNumbers[0].label },
+    { value: remoteByNumbers.activeProjects, label: fallbackByNumbers[1].label },
+    { value: remoteByNumbers.opensourceRepos, label: fallbackByNumbers[2].label },
+    { value: remoteByNumbers.supervisedStudents, label: fallbackByNumbers[3].label }
+  ];
 }
 
 function parseFeatureRank(value: PublicationWithOptionalFeature["feature"]): number | null {

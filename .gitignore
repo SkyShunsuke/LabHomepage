@@ -21,3 +21,9 @@ yarn-error.log*
 
 # macOS
 .DS_Store
+
+/.next-dev
+/.next-build
+
+/.next-dev
+/.next-build

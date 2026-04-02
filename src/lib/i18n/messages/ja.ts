@@ -12,15 +12,14 @@ export const jaMessages: Messages = {
     languageLabel: "言語",
     languages: {
       en: "EN",
-      ja: "日本語",
-      zh: "中文"
+      ja: "日本語"
     },
     nav: {
       home: "ホーム",
       research: "研究",
       news: "ニュース",
       blogs: "ブログ",
-      publications: "出版物",
+      publications: "研究業績",
       members: "メンバー",
       joinUs: "参加案内",
       business: "産学連携",
@@ -164,7 +163,8 @@ export const jaMessages: Messages = {
     projectLinks: {
       paper: "論文",
       code: "コード",
-      demo: "デモ"
+      demo: "デモ",
+      project: "プロジェクト"
     },
     outcomesTitle: "成果とインパクト",
     outcomesSubtitle: "論文、実装、連携の観点から代表的な成果を示します。",
@@ -286,8 +286,8 @@ export const jaMessages: Messages = {
     }
   },
   publications: {
-    title: "出版物",
-    subtitle: "論文誌・国際会議・各種論文を継続的に更新しています。",
+    title: "研究業績",
+    subtitle: "学術論文",
     noItemsTitle: "出版物はまだありません",
     noItemsBody: "管理画面から出版物を追加してください。",
     linkLabel: "論文リンク",
@@ -312,7 +312,9 @@ export const jaMessages: Messages = {
     clearFilters: "検索・フィルターをクリア",
     paperAriaLabel: "論文",
     projectAriaLabel: "プロジェクトページ",
-    codeAriaLabel: "コード"
+    codeAriaLabel: "コード",
+    showAbstract: "要旨を表示",
+    hideAbstract: "要旨を非表示"
   },
   members: {
     title: "メンバー",

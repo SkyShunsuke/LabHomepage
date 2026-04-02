@@ -12,15 +12,14 @@ export const enMessages: Messages = {
     languageLabel: "Language",
     languages: {
       en: "EN",
-      ja: "日本語",
-      zh: "中文"
+      ja: "日本語"
     },
     nav: {
       home: "Home",
       research: "Research",
       news: "News",
       blogs: "Blogs",
-      publications: "Publications",
+      publications: "Achievement",
       members: "Members",
       joinUs: "Join Us",
       business: "Business",
@@ -140,7 +139,7 @@ export const enMessages: Messages = {
     ],
     themeLabels: {
       whyItMatters: "Why it matters",
-      methods: "Methods and tools",
+      methods: "Primary areas",
       outputs: "Research contributions",
       imagePlaceholder: "Image"
     },
@@ -187,7 +186,8 @@ export const enMessages: Messages = {
     projectLinks: {
       paper: "Paper",
       code: "Code",
-      demo: "Demo"
+      demo: "Demo",
+      project: "Project"
     },
     outcomesTitle: "Results and Impact",
     outcomesSubtitle: "Representative outcomes from publication, deployment, and collaboration activities.",
@@ -312,8 +312,8 @@ export const enMessages: Messages = {
     }
   },
   publications: {
-    title: "Publications",
-    subtitle: "A continuously updated list of papers, journal articles, and conference publications.",
+    title: "Achievement",
+    subtitle: "Publications, presentations, talks, awards, and grants.",
     noItemsTitle: "No publications yet",
     noItemsBody: "Add publication entries from the admin dashboard.",
     linkLabel: "Publication link",
@@ -338,7 +338,9 @@ export const enMessages: Messages = {
     clearFilters: "Clear search and filters",
     paperAriaLabel: "Paper",
     projectAriaLabel: "Project page",
-    codeAriaLabel: "Code"
+    codeAriaLabel: "Code",
+    showAbstract: "Show abstract",
+    hideAbstract: "Hide abstract"
   },
   members: {
     title: "Members",
