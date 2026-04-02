@@ -1,3 +1,5 @@
+import type { Locale } from "@/lib/i18n/types";
+
 const REQUIRED_HEADERS = ["name", "role"] as const;
 const CANONICAL_HEADERS = new Set([
   "name",
@@ -7,7 +9,8 @@ const CANONICAL_HEADERS = new Set([
   "researchArea",
   "comment",
   "imageUrl",
-  "graduateYear"
+  "graduateYear",
+  "active"
 ]);
 
 const HEADER_ALIASES: Record<string, string> = {
@@ -53,7 +56,12 @@ const HEADER_ALIASES: Record<string, string> = {
   graduation: "graduateYear",
   gradyear: "graduateYear",
   卒業年: "graduateYear",
-  修了年: "graduateYear"
+  修了年: "graduateYear",
+  active: "active",
+  isactive: "active",
+  status: "active",
+  在籍: "active",
+  現役: "active"
 };
 
 export type RemoteSheetMember = {
@@ -66,7 +74,17 @@ export type RemoteSheetMember = {
   comment: string | null;
   imageUrl: string | null;
   graduateYear: string | null;
+  active: boolean | null;
 };
+
+function resolveSheetUrl(locale: Locale): string | null {
+  const fallback = process.env.MEMBERS_SPREADSHEET_URL?.trim() || null;
+  if (locale === "ja") {
+    return process.env.MEMBERS_JA_SPREADSHEET_URL?.trim() || fallback;
+  }
+
+  return process.env.MEMBERS_EN_SPREADSHEET_URL?.trim() || fallback;
+}
 
 function asOptionalString(value: string | undefined): string | null {
   if (!value) {
@@ -218,6 +236,23 @@ function parseRevalidateSeconds(raw: string | undefined): number {
   return Math.floor(parsed);
 }
 
+function parseOptionalBoolean(value: string | undefined): boolean | null {
+  const normalized = asOptionalString(value)?.toLowerCase();
+  if (!normalized) {
+    return null;
+  }
+
+  if (["true", "1", "yes", "y", "on"].includes(normalized)) {
+    return true;
+  }
+
+  if (["false", "0", "no", "n", "off"].includes(normalized)) {
+    return false;
+  }
+
+  return null;
+}
+
 function normalizeHeader(rawHeader: string): string {
   return rawHeader
     .replace(/^\uFEFF/, "")
@@ -266,11 +301,15 @@ function toCanonicalHeader(rawHeader: string): string | null {
     return "graduateYear";
   }
 
+  if (normalized.includes("active") || normalized.includes("status")) {
+    return "active";
+  }
+
   return null;
 }
 
-export async function getRemoteCsvMembers(): Promise<RemoteSheetMember[] | null> {
-  const csvUrl = process.env.MEMBERS_SPREADSHEET_URL?.trim();
+export async function getRemoteCsvMembers(locale: Locale = "en"): Promise<RemoteSheetMember[] | null> {
+  const csvUrl = resolveSheetUrl(locale);
   if (!csvUrl) {
     return null;
   }
@@ -335,8 +374,9 @@ export async function getRemoteCsvMembers(): Promise<RemoteSheetMember[] | null>
     const comment = asOptionalString(values.get("comment"));
     const imageUrl = normalizeGoogleDriveImageUrl(asOptionalString(values.get("imageUrl")));
     const graduateYear = asOptionalString(values.get("graduateYear"));
+    const active = parseOptionalBoolean(values.get("active"));
 
-    if (!name && !role && !email && !homepage && !researchArea && !comment && !imageUrl && !graduateYear) {
+    if (!name && !role && !email && !homepage && !researchArea && !comment && !imageUrl && !graduateYear && active === null) {
       continue;
     }
 
@@ -360,7 +400,8 @@ export async function getRemoteCsvMembers(): Promise<RemoteSheetMember[] | null>
       researchArea,
       comment,
       imageUrl,
-      graduateYear
+      graduateYear,
+      active
     });
   }
 

@@ -13,28 +13,56 @@ function getRoleBadgeTone(role: string): string {
   if (
     normalized.includes("principal investigator") ||
     normalized === "pi" ||
-    normalized.includes("professor")
+    normalized.includes("professor") ||
+    normalized.includes("教授") ||
+    normalized.includes("主任研究員")
   ) {
     return "badge-role-pi";
   }
 
-  if (normalized.includes("phd") || normalized.includes("doctoral")) {
+  if (
+    normalized.includes("phd") ||
+    normalized.includes("doctoral") ||
+    normalized.includes("博士")
+  ) {
     return "badge-role-phd";
   }
 
-  if (normalized.includes("master") || normalized.includes("msc")) {
+  if (
+    normalized.includes("master") ||
+    normalized.includes("msc") ||
+    normalized.includes("修士")
+  ) {
     return "badge-role-msc";
   }
 
   if (
     normalized.includes("undergraduate") ||
-    normalized.includes("bachelor")
+    normalized.includes("bachelor") ||
+    normalized.includes("学部")
   ) {
     return "badge-role-bachelor";
   }
 
-  if (normalized.includes("visiting")) {
+  if (normalized.includes("postdoc") || normalized.includes("ポスドク")) {
+    return "badge-role-postdoc";
+  }
+
+  if (
+    normalized.includes("visiting") ||
+    normalized.includes("客員")
+  ) {
     return "badge-role-visiting";
+  }
+
+  if (
+    normalized.includes("researcher") ||
+    normalized.includes("staff") ||
+    normalized.includes("research assistant") ||
+    normalized.includes("研究員") ||
+    normalized.includes("教員")
+  ) {
+    return "badge-role-researcher";
   }
 
   return "badge-role-default";
@@ -50,9 +78,23 @@ function isAlumniRole(role: string): boolean {
   );
 }
 
+function isAlumniMember(member: { role: string; isActive: boolean | null }): boolean {
+  if (typeof member.isActive === "boolean") {
+    return !member.isActive;
+  }
+
+  return isAlumniRole(member.role);
+}
+
 function isPiRole(role: string): boolean {
   const normalized = role.trim().toLowerCase();
-  return normalized === "pi" || normalized.includes("principal investigator") || normalized.includes("professor");
+  return (
+    normalized === "pi" ||
+    normalized.includes("principal investigator") ||
+    normalized.includes("professor") ||
+    normalized.includes("主任研究員") ||
+    normalized.includes("教授")
+  );
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -74,18 +116,21 @@ type MembersPageProps = {
 export default async function MembersPage({ searchParams }: MembersPageProps) {
   const locale = await resolveRequestLocale();
   const messages = getMessages(locale);
-  const members = await getMembers();
+  const members = await getMembers(locale);
+  const currentLabel = locale === "ja" ? "現所属" : "Current Members";
+  const alumniLabel = locale === "ja" ? "修了生" : "Alumni";
+  const noAlumniTitle = locale === "ja" ? "修了生はまだいません" : "No alumni yet";
+  const noAlumniBody = locale === "ja" ? "修了生のプロフィールはここに表示されます。" : "Alumni profiles will appear here once added.";
   const selectedView = isGitHubPagesBuild()
     ? "current"
     : (await searchParams)?.view === "alumni"
       ? "alumni"
       : "current";
-  const currentMembers = members.filter((member) => !isAlumniRole(member.role));
-  const alumniMembers = members.filter((member) => isAlumniRole(member.role));
+  const currentMembers = members.filter((member) => !isAlumniMember(member));
+  const alumniMembers = members.filter((member) => isAlumniMember(member));
   const visibleMembers = selectedView === "alumni" ? alumniMembers : currentMembers;
-  const noItemsTitle = selectedView === "alumni" ? "No alumni yet" : messages.members.noItemsTitle;
-  const noItemsBody =
-    selectedView === "alumni" ? "Alumni profiles will appear here once added." : messages.members.noItemsBody;
+  const noItemsTitle = selectedView === "alumni" ? noAlumniTitle : messages.members.noItemsTitle;
+  const noItemsBody = selectedView === "alumni" ? noAlumniBody : messages.members.noItemsBody;
 
   return (
     <>
@@ -100,7 +145,7 @@ export default async function MembersPage({ searchParams }: MembersPageProps) {
               role="tab"
               aria-selected={selectedView === "current"}
             >
-              Current Members ({currentMembers.length})
+              {currentLabel} ({currentMembers.length})
             </Link>
             <Link
               href="/members?view=alumni"
@@ -108,7 +153,7 @@ export default async function MembersPage({ searchParams }: MembersPageProps) {
               role="tab"
               aria-selected={selectedView === "alumni"}
             >
-              Alumni ({alumniMembers.length})
+              {alumniLabel} ({alumniMembers.length})
             </Link>
           </div>
         </div>
@@ -125,7 +170,7 @@ export default async function MembersPage({ searchParams }: MembersPageProps) {
                 <article key={member.id} className={`card ${isPiRole(member.role) ? "member-card-pi" : ""}`}>
                   <div className="member-card-head">
                     <div className="member-card-main">
-                      <span className={`badge ${getRoleBadgeTone(member.role)} ${isAlumniRole(member.role) ? "badge-alumni" : ""}`}>
+                      <span className={`badge ${getRoleBadgeTone(member.role)}`}>
                         {member.role}
                       </span>
                       <h2>{member.name}</h2>
@@ -140,7 +185,11 @@ export default async function MembersPage({ searchParams }: MembersPageProps) {
                       <span>{member.researchArea}</span>
                     </div>
                   ) : null}
-                  {member.graduateYear ? <p className="member-graduate-year">Graduated in {member.graduateYear}</p> : null}
+                  {member.graduateYear ? (
+                    <p className="member-graduate-year">
+                      {locale === "ja" ? `${member.graduateYear}年修了` : `Graduated in ${member.graduateYear}`}
+                    </p>
+                  ) : null}
                   {member.comment ? <p className="muted">{member.comment}</p> : null}
                   {member.email || member.websiteUrl ? (
                     <div className="member-actions" aria-label="Member links">

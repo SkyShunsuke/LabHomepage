@@ -318,7 +318,7 @@ export const jaMessages: Messages = {
   },
   members: {
     title: "メンバー",
-    subtitle: "教員、研究者、学生がデータ駆動型の科学技術に取り組んでいます。",
+    subtitle: "本研究室に所属する学生・教職員一覧です。",
     noItemsTitle: "メンバー情報はまだありません",
     noItemsBody: "管理画面からメンバー情報を追加してください。",
     researchTopicLabel: "研究テーマ",
@@ -477,7 +477,7 @@ export const jaMessages: Messages = {
   },
   news: {
     title: "ニュース",
-    subtitle: "研究室の最近の活動・お知らせ・更新情報を掲載しています。",
+    subtitle: "長谷川研究室の最近の活動・お知らせ・更新情報を掲載しています。",
     noItemsTitle: "ニュースはまだありません",
     noItemsBody: "管理画面から最初のニュースを作成してください。",
     visitExternal: "外部ページを見る",

@@ -29,6 +29,7 @@ export type PublicMember = {
   researchArea: string | null;
   comment: string | null;
   graduateYear: string | null;
+  isActive: boolean | null;
 };
 
 export type PublicNews = {
@@ -155,7 +156,7 @@ export async function getFeaturedProject() {
   });
 }
 
-export async function getMembers() {
+export async function getMembers(locale: Locale = "en") {
   if (isDesignPreviewEnabled()) {
     return previewMembers.map<PublicMember>((member) => {
       const { bio, researchTopic } = parseMemberBio(member.bio);
@@ -168,12 +169,13 @@ export async function getMembers() {
         imageUrl: normalizeGoogleDriveImageUrl(member.imageUrl),
         researchArea: researchTopic || null,
         comment: bio || null,
-        graduateYear: null
+        graduateYear: null,
+        isActive: null
       };
     });
   }
 
-  const remoteCsvMembers = await getRemoteCsvMembers().catch((error) => {
+  const remoteCsvMembers = await getRemoteCsvMembers(locale).catch((error) => {
     console.error("Failed to load remote members spreadsheet.", error);
     return null;
   });
@@ -188,7 +190,8 @@ export async function getMembers() {
       imageUrl: normalizeGoogleDriveImageUrl(member.imageUrl),
       researchArea: member.researchArea,
       comment: member.comment,
-      graduateYear: member.graduateYear
+      graduateYear: member.graduateYear,
+      isActive: member.active
     }));
   }
 
@@ -208,7 +211,8 @@ export async function getMembers() {
       imageUrl: normalizeGoogleDriveImageUrl(member.imageUrl),
       researchArea: researchTopic || null,
       comment: bio || null,
-      graduateYear: null
+      graduateYear: null,
+      isActive: true
     };
   });
 }

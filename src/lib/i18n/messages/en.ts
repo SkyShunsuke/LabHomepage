@@ -345,7 +345,7 @@ export const enMessages: Messages = {
   members: {
     title: "Members",
     subtitle:
-      "Our team includes faculty, researchers, and students working across data-driven science and engineering.",
+      "This is a list of students and faculty/staff affiliated with our laboratory.",
     noItemsTitle: "No members yet",
     noItemsBody: "Add member profiles from the admin dashboard.",
     researchTopicLabel: "Research Topic",

@@ -11,14 +11,18 @@
   --radius: 16px;
   --badge-pi-bg: #fff1db;
   --badge-pi-fg: #8b4b00;
-  --badge-phd-bg: #dbe8ff;
-  --badge-phd-fg: #4f2a8f;
+  --badge-phd-bg: #efe2ff;
+  --badge-phd-fg: #5c2a95;
   --badge-msc-bg: #d8f5e8;
   --badge-msc-fg: #14623e;
   --badge-bachelor-bg: #dfeeff;
   --badge-bachelor-fg: #154a90;
+  --badge-postdoc-bg: #efe3ff;
+  --badge-postdoc-fg: #5e3197;
   --badge-visiting-bg: #ffe2ef;
   --badge-visiting-fg: #9a2458;
+  --badge-researcher-bg: #ffe6d6;
+  --badge-researcher-fg: #8a3b16;
   --badge-default-bg: #e5eef6;
   --badge-default-fg: #2f4f6d;
 }
@@ -35,14 +39,18 @@
     --shadow: 0 16px 40px rgba(0, 0, 0, .35);
     --badge-pi-bg: #5f3f10;
     --badge-pi-fg: #ffd79d;
-    --badge-phd-bg: #3b285a;
-    --badge-phd-fg: #dec6ff;
+    --badge-phd-bg: #4a2a74;
+    --badge-phd-fg: #e7d0ff;
     --badge-msc-bg: #174936;
     --badge-msc-fg: #9fe8c7;
     --badge-bachelor-bg: #1c3f6b;
     --badge-bachelor-fg: #bcd8ff;
+    --badge-postdoc-bg: #3d2760;
+    --badge-postdoc-fg: #e4caff;
     --badge-visiting-bg: #5a2742;
     --badge-visiting-fg: #ffc1df;
+    --badge-researcher-bg: #5c321a;
+    --badge-researcher-fg: #ffd0b8;
     --badge-default-bg: #2d3f53;
     --badge-default-fg: #c8dcf1;
   }
@@ -1139,9 +1147,19 @@ a {
   --badge-fg: var(--badge-bachelor-fg);
 }
 
+.badge-role-postdoc {
+  --badge-bg: var(--badge-postdoc-bg);
+  --badge-fg: var(--badge-postdoc-fg);
+}
+
 .badge-role-visiting {
   --badge-bg: var(--badge-visiting-bg);
   --badge-fg: var(--badge-visiting-fg);
+}
+
+.badge-role-researcher {
+  --badge-bg: var(--badge-researcher-bg);
+  --badge-fg: var(--badge-researcher-fg);
 }
 
 .badge-role-default {

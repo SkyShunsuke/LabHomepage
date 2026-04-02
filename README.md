@@ -217,7 +217,11 @@ npm run pubs:export
 ## Manage members with Google Spreadsheet (auto sync)
 
 You can keep member profiles in a Google Spreadsheet (or CSV) hosted on Google Drive.  
-When `MEMBERS_SPREADSHEET_URL` is set, `/members` reads that spreadsheet instead of DB members.
+If locale-specific URLs are set, `/members` reads:
+- `MEMBERS_JA_SPREADSHEET_URL` for Japanese locale pages
+- `MEMBERS_EN_SPREADSHEET_URL` for English locale pages
+
+`MEMBERS_SPREADSHEET_URL` is supported as a fallback when locale-specific URLs are not set.
 
 1. Prepare spreadsheet columns:
    - `name` (required)
@@ -228,10 +232,14 @@ When `MEMBERS_SPREADSHEET_URL` is set, `/members` reads that spreadsheet instead
    - `comment` (optional)
    - `imageUrl` (optional)
    - `graduateYear` (optional; shown as "Graduated in {Year}" when present)
+   - `active` (optional; `TRUE` = current member, `FALSE` = alumni)
 2. Share the sheet/file as "Anyone with the link can view".
 3. Set in `.env`:
 
 ```bash
+MEMBERS_JA_SPREADSHEET_URL="https://docs.google.com/spreadsheets/d/<JA_SHEET_ID>/edit#gid=0"
+MEMBERS_EN_SPREADSHEET_URL="https://docs.google.com/spreadsheets/d/<EN_SHEET_ID>/edit#gid=0"
+# Optional fallback for both locales:
 MEMBERS_SPREADSHEET_URL="https://docs.google.com/spreadsheets/d/<SHEET_ID>/edit#gid=0"
 MEMBERS_SPREADSHEET_REVALIDATE_SECONDS="300"
 ```
